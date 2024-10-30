@@ -3,6 +3,7 @@ package com.griddynamics.springcourse.restcontroller;
 import com.griddynamics.springcourse.entity.PhoneBookEntry;
 import com.griddynamics.springcourse.service.PhoneBook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Set;
 @RequestMapping("api/v1/contacts")
 public class PhoneBookRestController {
 
-    private PhoneBook phoneBook;
+    private final PhoneBook phoneBook;
 
     @Autowired
     public PhoneBookRestController(PhoneBook phoneBook) {
@@ -35,6 +36,7 @@ public class PhoneBookRestController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void createRecord(@RequestBody PhoneBookEntry entry) {
         phoneBook.createRecord(entry);
     }

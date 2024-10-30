@@ -4,7 +4,6 @@ import com.griddynamics.springcourse.entity.PhoneBookEntry;
 import com.griddynamics.springcourse.repository.InMemoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -61,16 +60,13 @@ public class PhoneBook {
     }
 
     public void createRecord(PhoneBookEntry entry) {
+        if (entry.getName() == null || entry.getPhoneNumber() == null) {
+            throw new IllegalArgumentException("Name and phone number must not be null");
+        }
         repository.addPhone(entry.getName(), entry.getPhoneNumber());
     }
 
     public void deleteByName(String name) {
-        // Need to rethrow the exception here since otherwise Spring will wrap it up into another.
-        // Disabling wrapping of exception overall seems like not a good idea just for one case
-        try {
-            repository.removeName(name);
-        } catch (InvalidDataAccessApiUsageException ex) {
-            throw new IllegalArgumentException("Name not found in phone book: " + name, ex);
-        }
+        repository.removeName(name);
     }
 }

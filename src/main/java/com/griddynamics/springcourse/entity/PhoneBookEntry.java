@@ -4,7 +4,7 @@ public class PhoneBookEntry {
     private String name;
     private String phoneNumber;
 
-    public PhoneBookEntry(String phoneNumber, String name) {
+    public PhoneBookEntry(String name, String phoneNumber) {
         this.phoneNumber = phoneNumber;
         this.name = name;
     }
